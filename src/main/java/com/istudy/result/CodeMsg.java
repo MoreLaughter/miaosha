@@ -20,11 +20,13 @@ public class CodeMsg {
 	public static CodeMsg LOGINVO_EMPTY = new CodeMsg(500217, "未输入用户帐号和密码");
 	
 	//商品模块 5003XX
-	
+	public static CodeMsg STOCK_NULL = new CodeMsg(500310, "商品库存不足");
+
 	//订单模块 5004XX
 	
 	//秒杀模块 5005XX
-	
+	public static CodeMsg REPEATED_MIAOSHA = new CodeMsg(500510, "你已参与秒杀");
+
 	private CodeMsg( ) {
 	}
 			

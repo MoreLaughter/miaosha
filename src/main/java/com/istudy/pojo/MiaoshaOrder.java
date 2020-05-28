@@ -100,4 +100,6 @@ public class MiaoshaOrder implements Serializable {
     public void setGoodsId(Long goodsId) {
         this.goodsId = goodsId;
     }
+
+
 }

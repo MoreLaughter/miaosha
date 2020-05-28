@@ -12,4 +12,11 @@
     <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
     <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
   </resultMap>
+
+  <update id="reduceStock" parameterType="java.lang.Long">
+    UPDATE miaosha_goods
+    SET stock_count = stock_count - 1
+    WHERE
+    goods_id = #{goodsId}
+  </update>
 </mapper>

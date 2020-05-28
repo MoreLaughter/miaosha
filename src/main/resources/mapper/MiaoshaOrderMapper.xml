@@ -10,4 +10,13 @@
     <result column="order_id" property="orderId" jdbcType="BIGINT" />
     <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
   </resultMap>
+
+  <select id="selectByUserIdAndGoodsId" parameterType="java.lang.Long" resultType="com.istudy.pojo.MiaoshaOrder" >
+    SELECT
+    *
+    FROM
+    miaosha_order o
+    WHERE
+    o.user_id = #{userId} and o.goods_id = #{goodsId}
+  </select>
 </mapper>

@@ -29,12 +29,14 @@
                              type="XMLMAPPER"/>
 
 
-        <table tableName="goods"></table>
-        <table tableName="miaosha_goods"></table>
-        <table tableName="miaosha_order"></table>
-        <table tableName="miaosha_user"></table>
-        <table tableName="order_info"></table>
-        <table tableName="user"></table>
+
+        <table tableName="order_info">
+            <columnOverride column="order_channel" javaType="java.lang.Integer"></columnOverride>
+            <columnOverride column="status" javaType="java.lang.Integer"></columnOverride>
+
+        </table>
+
+
 
 
 

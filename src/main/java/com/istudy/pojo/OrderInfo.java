@@ -1,12 +1,11 @@
 package com.istudy.pojo;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "order_info")
-public class OrderInfo implements Serializable {
+public class OrderInfo {
     /**
      * 订单表
      */
@@ -53,12 +52,12 @@ public class OrderInfo implements Serializable {
      * 1pc,2android,3ios
      */
     @Column(name = "order_channel")
-    private Byte orderChannel;
+    private Integer orderChannel;
 
     /**
      * 订单状态：0新建未支付，1待发货，2已发货，3已收货，4已退款，5已完成
      */
-    private Byte status;
+    private Integer status;
 
     /**
      * 订单的创建时间
@@ -203,7 +202,7 @@ public class OrderInfo implements Serializable {
      *
      * @return order_channel - 1pc,2android,3ios
      */
-    public Byte getOrderChannel() {
+    public Integer getOrderChannel() {
         return orderChannel;
     }
 
@@ -212,7 +211,7 @@ public class OrderInfo implements Serializable {
      *
      * @param orderChannel 1pc,2android,3ios
      */
-    public void setOrderChannel(Byte orderChannel) {
+    public void setOrderChannel(Integer orderChannel) {
         this.orderChannel = orderChannel;
     }
 
@@ -221,7 +220,7 @@ public class OrderInfo implements Serializable {
      *
      * @return status - 订单状态：0新建未支付，1待发货，2已发货，3已收货，4已退款，5已完成
      */
-    public Byte getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
@@ -230,7 +229,7 @@ public class OrderInfo implements Serializable {
      *
      * @param status 订单状态：0新建未支付，1待发货，2已发货，3已收货，4已退款，5已完成
      */
-    public void setStatus(Byte status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
