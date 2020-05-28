@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.istudy.mapper.GoodsCustomMapper" >
+
+  <select id="queryGoodsCutom"  resultType="com.istudy.pojo.GoodsCustom">
+    select g.*,mg.stock_count, mg.start_date, mg.end_date,mg.miaosha_price
+    from miaosha_goods mg left join goods g
+    on mg.goods_id = g.id
+  </select>
+
+  <select id="queryGoodsCutomById" parameterType="java.lang.Long"
+          resultType="com.istudy.pojo.GoodsCustom">
+    select g.*,mg.stock_count, mg.start_date, mg.end_date,mg.miaosha_price
+      from miaosha_goods mg left join goods g
+      on mg.goods_id = g.id
+      where g.id = #{goodsId}
+  </select>
+
+</mapper>
