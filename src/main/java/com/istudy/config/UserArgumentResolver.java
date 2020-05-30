@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.istudy.pojo.MiaoshaUser;
 import com.istudy.redis.MiaoshaUserKey;
 import com.istudy.service.MiaoshaUserService;
-import com.istudy.service.impl.MiaoshaUserServiceImpl;
 import com.istudy.utils.RedisOperator;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
     @Autowired
     RedisOperator redisOperator;
 
-  @Override
+    @Override
     public boolean supportsParameter(MethodParameter parameter) {
         Class<?> clazz = parameter.getParameterType();
         return clazz==MiaoshaUser.class;
@@ -66,8 +65,6 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
         }
         String value = redisOperator.get(MiaoshaUserKey.token.getPrefix() + ":" + token);
         MiaoshaUser user = JSON.toJavaObject(JSON.parseObject(value), MiaoshaUser.class);
-         //JSON.toJavaObject(redisOperator.get(MiaoshaUserKey.token.getPrefix() + ":" + token),MiaoshaUser.class);
-         //JSON.toJavaObject(JSON.parseObject(redisOperator.get(Miao)),MiaoshaUser.class);
         //延长有效期
         if(user != null) {
             addCookie(response, token, user);

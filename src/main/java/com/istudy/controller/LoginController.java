@@ -28,11 +28,11 @@ public class LoginController {
 
     @ResponseBody
     @RequestMapping("/dologin")
-    public Result<Boolean> doLogin(HttpServletResponse response, @Valid LoginVO loginVo){
+        public Result<String> doLogin(HttpServletResponse response, @Valid LoginVO loginVo){
         log.info(loginVo.toString());
         //登录
-        miaoshaUserService.doLogin(response,loginVo);
-        return Result.success(true);
+        String token = miaoshaUserService.doLogin(response,loginVo);
+        return Result.success(token);
     }
 
 
