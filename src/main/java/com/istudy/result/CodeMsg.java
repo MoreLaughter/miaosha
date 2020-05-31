@@ -23,6 +23,7 @@ public class CodeMsg {
 	public static CodeMsg STOCK_NULL = new CodeMsg(500310, "商品库存不足");
 
 	//订单模块 5004XX
+	public  static CodeMsg ORDER_NOT_EXIST = new  CodeMsg(500400,"订单不存在");
 	
 	//秒杀模块 5005XX
 	public static CodeMsg REPEATED_MIAOSHA = new CodeMsg(500510, "你已参与秒杀");
