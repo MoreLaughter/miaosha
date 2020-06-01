@@ -5,5 +5,5 @@ import com.istudy.utils.MyMapper;
 import org.apache.ibatis.annotations.Param;
 
 public interface MiaoshaGoodsMapper extends MyMapper<MiaoshaGoods> {
-    public void reduceStock(@Param("goodsId") long goodId);
+    public boolean reduceStock(@Param("goodsId") long goodId);
 }

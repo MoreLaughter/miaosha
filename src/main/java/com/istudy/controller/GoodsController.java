@@ -54,7 +54,7 @@ public class GoodsController {
         WebContext webContext = new WebContext(request, response, request.getServletContext(), request.getLocale(),model.asMap());
         html = thymeleafViewResolver.getTemplateEngine().process("goods_list", webContext);
         if(!StringUtils.isEmpty(html)){
-            redis.set(GoodsKey.getGoodsList.getPrefix(),html);
+            redis.set(GoodsKey.getGoodsList.getPrefix(),html,60);
         }
         return html;
 
@@ -100,7 +100,7 @@ public class GoodsController {
         WebContext webContext = new WebContext(request, response, request.getServletContext(), request.getLocale(),model.asMap());
         html = thymeleafViewResolver.getTemplateEngine().process("goods_detail", webContext);
         if(!StringUtils.isEmpty(html)){
-            redis.set(GoodsKey.getGoodsDetail.getPrefix()+goodsId,html);
+            redis.set(GoodsKey.getGoodsDetail.getPrefix()+goodsId,html,60);
         }
         return html;
     }

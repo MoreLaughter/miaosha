@@ -190,4 +190,7 @@ public class RedisOperator {
 		return redisTemplate.opsForList().rightPush(key, value);
 	}
 
+
+
+
 }
