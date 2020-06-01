@@ -2,6 +2,7 @@ package com.istudy.controller;
 
 import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSON;
+import com.istudy.Access.AccessLimit;
 import com.istudy.pojo.GoodsCustom;
 import com.istudy.pojo.MiaoshaOrder;
 import com.istudy.pojo.MiaoshaUser;
@@ -22,11 +23,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
@@ -65,12 +64,19 @@ public class MiaoshaController implements InitializingBean{
         }
     }
 
-    @RequestMapping(value = "/do_miaosha",method = RequestMethod.POST)
+    @AccessLimit(seconds=5, maxCount=4, needLogin=true)
+    @RequestMapping(value = "/{path}/do_miaosha",method = RequestMethod.POST)
     @ResponseBody
-    public Result<Integer> miaosha(Model model, MiaoshaUser user, @RequestParam("goodsId") long goodsId){
+    public Result<Integer> miaosha(Model model, MiaoshaUser user, @RequestParam("goodsId") long goodsId,
+        @PathVariable("path") String path){
         model.addAttribute("user",user);
         if(user == null){
             return Result.error(CodeMsg.SESSION_ERROR);
+        }
+        //验证path
+        boolean check = miaoshaService.checkPath(user,goodsId,path);
+        if(!check){
+            return Result.error(CodeMsg.REQUEST_ILLEGAL);
         }
 
         //内存标记，减少redis访问
@@ -120,6 +126,22 @@ public class MiaoshaController implements InitializingBean{
         }
         long result  =miaoshaService.getMiaoshaResult(user.getId(), goodsId);
         return Result.success(result);
+    }
+
+    @AccessLimit(seconds=5, maxCount=4, needLogin=true)
+    @RequestMapping(value = "/path", method = RequestMethod.GET)
+    @ResponseBody
+    public Result<String> getMiaoshaPath(HttpServletRequest request, MiaoshaUser user,
+                                         @RequestParam("goodsId") long goodsId) {
+        if (user == null) {
+            return Result.error(CodeMsg.SESSION_ERROR);
+        }
+        /*boolean check = miaoshaService.checkVerifyCode(user, goodsId, verifyCode);
+        if (!check) {
+            return Result.error(CodeMsg.REQUEST_ILLEGAL);
+        }*/
+        String path = miaoshaService.createMiaoshaPath(user, goodsId);
+        return Result.success(path);
     }
 
 }

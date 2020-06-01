@@ -7,7 +7,9 @@ import com.istudy.pojo.OrderInfo;
 import com.istudy.redis.MiaoshaKey;
 import com.istudy.redis.OrderKey;
 import com.istudy.service.impl.MiaoshaOrderServiceImpl;
+import com.istudy.utils.MD5Util;
 import com.istudy.utils.RedisOperator;
+import com.istudy.utils.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,5 +66,22 @@ public class MiaoshaService {
         } else {
             return true;
         }
+    }
+
+    public String createMiaoshaPath(MiaoshaUser user, long goodsId) {
+        if(user == null || goodsId <=0) {
+            return null;
+        }
+        String str = MD5Util.md5(UUIDUtil.uuid()+"123456");
+        redis.set(MiaoshaKey.getMiaoshaPath.getPrefix()+":"+user.getId() + "-"+ goodsId,str);
+        return str;
+    }
+
+    public boolean checkPath(MiaoshaUser user, long goodsId, String path) {
+        if(user == null || path == null){
+            return false;
+        }
+        String pathOld = redis.get(MiaoshaKey.getMiaoshaPath.getPrefix()+":"+user.getId() + "-"+ goodsId);
+        return path.equals(pathOld);
     }
 }

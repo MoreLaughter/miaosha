@@ -42,7 +42,7 @@
             <span id = "miaoshaTip"></span>
         </td>
         <td>
-            <button class="btn btn-primary btn-block" type="button" id="buyButton" onclick="domiaosha()">立即秒杀</button>
+            <button class="btn btn-primary btn-block" type="button" id="buyButton" onclick="getMiaoshaPath()">立即秒杀</button>
             <input type="hidden" name="goodsId" id="goodsId" />
         </td>
      </tr>
@@ -63,6 +63,29 @@
 </body>
 <script>
 
+function getMiaoshaPath(){
+	var goodsId = $("#goodsId").val();
+	g_showLoading();
+	$.ajax({
+		url:"/miaosha/path",
+		type:"GET",
+		data:{
+			goodsId:goodsId,
+			verifyCode:$("#verifyCode").val()
+		},
+		success:function(data){
+			if(data.code == 0){
+				var path = data.data;
+				domiaosha(path);
+			}else{
+				layer.msg(data.msg);
+			}
+		},
+		error:function(){
+			layer.msg("客户端请求有误");
+		}
+	});
+}
 $(function(){
     getDetail();
 });
@@ -125,9 +148,9 @@ function render(detail){
 
 }
 
-function domiaosha(){
+function domiaosha(path){
     $.ajax({
-        url:"/miaosha/do_miaosha",
+        url:"/miaosha/"+path+"/do_miaosha",
         type:"POST",
         data:{
             goodsId:$("#goodsId").val(),
